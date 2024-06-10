@@ -1,6 +1,13 @@
 import { createApp } from 'vue'
 import { router  } from './router'
-import { Drawer, Button, message } from 'ant-design-vue'
+import { 
+    Drawer, 
+    Button,
+    List,
+    Menu,
+    message 
+} from 'ant-design-vue'
+import { createPinia } from 'pinia';
 import App from './App.vue'
 
 import 'ant-design-vue/dist/reset.css';
@@ -11,6 +18,9 @@ const app = createApp(App);
 app.use(router);
 app.use(Button);
 app.use(Drawer);
+app.use(List);
+app.use(Menu);
+app.use(createPinia);
 app.mount('#app');
 
 app.config.globalProperties.$message = message;

@@ -23,9 +23,7 @@
         title="DANH MUC"
         placement="left"
     >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <TheMenu />
     </a-drawer>
 
     <a-drawer
@@ -40,7 +38,9 @@
 </template>
 
 <script setup>
+import TheMenu from '../components/TheMenu.vue';
 import { ref } from 'vue';
+
 const open = ref(false);
 const afterOpenChange = bool => {
   console.log('open', bool);
