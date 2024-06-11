@@ -7,7 +7,7 @@ import {
     Menu,
     message 
 } from 'ant-design-vue'
-import { createPinia } from 'pinia';
+import { createPinia } from 'pinia'
 import App from './App.vue'
 
 import 'ant-design-vue/dist/reset.css';
@@ -20,7 +20,7 @@ app.use(Button);
 app.use(Drawer);
 app.use(List);
 app.use(Menu);
-app.use(createPinia);
+app.use(createPinia());
 app.mount('#app');
 
 app.config.globalProperties.$message = message;

@@ -25,15 +25,6 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
 import { useMenu } from '../stores/use-menu';
-
-const store = useMenu();
-const { selectedKeys, openKeys } = store;
-
-const state = reactive({
-  selectedKeys: ['admin-users'],
-  openKeys: [],
-});
-
+const state = useMenu();
 </script>
