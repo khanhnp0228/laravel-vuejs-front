@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import { router  } from './router'
-import { 
+import {
+    Table,
+    Card,
     Drawer, 
     Button,
     List,
@@ -8,6 +10,10 @@ import {
     message 
 } from 'ant-design-vue'
 import { createPinia } from 'pinia'
+
+import axios from "axios";
+window.axios = axios;
+
 import App from './App.vue'
 
 import 'ant-design-vue/dist/reset.css';
@@ -26,6 +32,8 @@ const app = createApp(App);
 
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(Table);
+app.use(Card);
 app.use(Button);
 app.use(Drawer);
 app.use(List);
