@@ -1,9 +1,19 @@
 <template>
     <div>
       <a-card title="Users" style="width: 100%">
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-end">
+            <a-button type="primary">
+              <router-link :to="{ name: 'admin-users-create' }">
+                <font-awesome-icon :icon="['fas', 'plus']" />
+              </router-link>
+            </a-button>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-12">
-            <a-table :dataSource="users" :columns="columns" >
+            <a-table :dataSource="users" :columns="columns" :scroll="{ x: 576 }">
               <template #bodyCell="{ column, index, record }">
 
                 <template v-if="column.key === 'index'">
@@ -39,6 +49,7 @@
       title: 'Avatar',
       dataIndex: 'avatar',
       key: 'username',
+      responsive: ['md']
     },
     {
       title: 'Username',
@@ -54,6 +65,7 @@
       title: 'Departments',
       dataIndex: 'departments',
       key: 'departments',
+      responsive: ['md']
     },
     {
       title: 'Status',
@@ -64,6 +76,12 @@
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      responsive: ['md']
+    },
+    {
+      title: 'Actions',
+      key: 'tools',
+      fixed: 'right',
     },
   ];
 

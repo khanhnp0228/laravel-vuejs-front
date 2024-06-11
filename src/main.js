@@ -1,6 +1,10 @@
 import { createApp } from 'vue'
 import { router  } from './router'
 import {
+    Input,
+    InputPassword,
+    Select,
+    Avatar,
     Table,
     Card,
     Drawer, 
@@ -32,6 +36,10 @@ const app = createApp(App);
 
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(Input);
+app.use(InputPassword);
+app.use(Select);
+app.use(Avatar);
 app.use(Table);
 app.use(Card);
 app.use(Button);
