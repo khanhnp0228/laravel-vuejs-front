@@ -8,5 +8,5 @@
 <script setup>
 import { useMenu } from '../../../stores/use-menu';
 const state = useMenu();
-state.onSelectedKeys(['admin-roles']);
+state.onSelectedKeys(['admin-settings']);
 </script>

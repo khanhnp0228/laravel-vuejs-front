@@ -6,25 +6,30 @@
     >
         <a-menu-item key="admin-users">
             <router-link :to="{ name: 'admin-users' }">
-                <span>Users</span>
+                <UserOutlined /><span>Users</span>
             </router-link>
         </a-menu-item>
 
         <a-menu-item key="admin-roles">
             <router-link :to="{ name: 'admin-roles' }">
-                <span>Roles</span>
+                <TagOutlined /><span>Roles</span>
             </router-link>
         </a-menu-item>
 
         <a-menu-item key="admin-settings">
             <router-link :to="{ name: 'admin-settings' }">
-                <span>Settings</span>
+                <SettingOutlined /><span>Settings</span>
             </router-link>
         </a-menu-item>
     </a-menu>
 </template>
 
 <script setup>
+import { 
+    UserOutlined,
+    TagOutlined,
+    SettingOutlined
+} from '@ant-design/icons-vue';
 import { useMenu } from '../stores/use-menu';
 const state = useMenu();
 </script>
