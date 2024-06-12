@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import { router  } from './router'
 import {
+    Checkbox,
     Input,
-    InputPassword,
     Select,
     Avatar,
     Table,
@@ -36,8 +36,8 @@ const app = createApp(App);
 
 app.use(router);
 app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(Checkbox);
 app.use(Input);
-app.use(InputPassword);
 app.use(Select);
 app.use(Avatar);
 app.use(Table);

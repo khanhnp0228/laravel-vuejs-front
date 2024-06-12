@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="createUser()">
-    <a-card title="Create new User" style="width: 100%">
+  <form @submit.prevent="">
+    <a-card title="Edit User" style="width: 100%">
     <div class="row mb-3">
       <div class="col-12 col-sm-4">
 
@@ -161,6 +161,16 @@
         </div>
 
         <div class="row mb-3">
+          <div class="col-12 col-sm-3 text-start text-sm-end"></div>
+
+          <div class="col-12 col-sm-5">
+            <a-checkbox v-model:checked="change_password">
+              Change password
+            </a-checkbox>
+          </div>
+        </div>
+
+        <div class="row mb-3" v-if="change_password">
           <div class="col-12 col-sm-3 text-start text-sm-end">
             <label>
               <span class="text-danger me-1">*</span>
@@ -185,7 +195,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" v-if="change_password">
           <div class="col-12 col-sm-3 text-start text-sm-end">
             <label>
               <span class="text-danger me-1">*</span>
@@ -207,6 +217,30 @@
 
             <div class="w-100"></div>
             <small v-if="errors.password_confirmation" class="text-danger">{{ errors.password_confirmation[0] }}</small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-3 text-start text-sm-end">
+            <label>
+              <span>Login recently:</span>
+            </label>
+          </div>
+
+          <div class="col-12 col-sm-5">
+            <span>{{ user.login_at }}</span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-3 text-start text-sm-end">
+            <label>
+              <span>Password change recently:</span>
+            </label>
+          </div>
+
+          <div class="col-12 col-sm-5">
+            <span>{{ user.change_password_at }}</span>
           </div>
         </div>
 
@@ -232,7 +266,7 @@
 
 <script setup>
   import { ref, reactive, toRefs } from "vue";
-  import { useRouter } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
   import { useMenu } from '../../../stores/use-menu';
   import axios from "axios";
   import {message} from "ant-design-vue";
@@ -240,6 +274,7 @@
   state.onSelectedKeys(['admin-users']);
 
   const router = useRouter();
+  const route = useRoute();
   const users_status = ref([]);
   const departments = ref([]);
   const user = reactive({
@@ -250,42 +285,41 @@
     password_confirmation: "",
     department_id: [],
     status_id: [],
+    login_at: "",
+    change_password_at: ""
   });
+  const change_password = ref(false);
 
   const errors = ref({});
-
-  const getUsersCreate = () => {
-    axios.get('http://localhost:8000/api/users/create')
-        .then(function (response) {
-          // handle success
-          users_status.value = response.data.users_status;
-          departments.value = response.data.departments;
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
-  }
 
   const filterOption = (input, option) => {
     return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
-  const createUser = () => {
-    axios.post("http://localhost:8000/api/users", user)
+  const getUserEdit = () => {
+    axios.get(`http://localhost:8000/api/users/${route.params.id}/edit`)
       .then(function (response) {
-        if(response) {
-          message.success('Create new User success!')
-          router.push({ name: 'admin-users'});
-        }
+        users_status.value = response.data.users_status;
+        departments.value = response.data.departments;
+
+        user.username = response.data.user.username;
+        user.name = response.data.user.name;
+        user.email = response.data.user.email;
+        user.department_id = response.data.user.department_id;
+        user.status_id = response.data.user.status_id;
+
+        // response.data.user.login_at ? user.login_at = response.data.user.login_at : user.login_at = "Not login yet";
+        // response.data.user.change_password_at ? user.change_password_at = response.data.user.change_password_at : user.change_password_at = "Not change password yet";
+
+        user.login_at = response.data.user.login_at ?? "Not login yet";
+        user.change_password_at = response.data.user.change_password_at ?? "Not change password yet";
       })
-      .catch(function (error) {
-        errors.value = error.response.data.errors;
+      .catch(function (errors) {
+        console.log(errors);
       });
   }
 
-  getUsersCreate();
-
+  getUserEdit();
 </script>
 
 <style>

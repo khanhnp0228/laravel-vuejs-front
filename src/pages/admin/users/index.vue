@@ -25,6 +25,17 @@
                   <span v-else-if="record.status_id == 2" class="text-danger">{{ record.status }}</span>
                 </template>
 
+                <template v-if="column.key === 'action'">
+                  <a-button type="primary" class="me-1">
+                    <router-link :to="{ name: 'admin-users-edit', params: {id: record.id}}">
+                      <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+                    </router-link>
+                  </a-button>
+                  <a-button type="primary" danger>
+                    <font-awesome-icon :icon="['fas', 'trash']" />
+                  </a-button>
+                </template>
+
               </template>
             </a-table>
           </div>
@@ -80,17 +91,16 @@
     },
     {
       title: 'Actions',
-      key: 'tools',
+      key: 'action',
       fixed: 'right',
     },
   ];
 
   const getUsers = () => {
-    axios.get('http://localhost:8000/api/user/')
+    axios.get('http://localhost:8000/api/users/')
         .then(function (response) {
           // handle success
           users.value = response.data;
-          console.log(response);
         })
         .catch(function (error) {
           // handle error
