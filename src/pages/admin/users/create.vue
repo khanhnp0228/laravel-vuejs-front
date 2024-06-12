@@ -214,12 +214,11 @@
     </div>
     <div class="row">
       <div class="col-12 d-grid d-sm-flex justify-content-sm-end mx-auto">
-        <a-button class="me-0 me-sm-2 mb-3 mb-sm-0">
-          <router-link :to="{ name: 'admin-users' }">
+        <router-link :to="{ name: 'admin-users' }">
+          <a-button class="me-0 me-sm-2 mb-3 mb-sm-0">
             <span>Cancel</span>
-          </router-link>
-
-        </a-button>
+          </a-button>
+        </router-link>
 
         <a-button type="primary" html-type="submit">
           <span>Save</span>

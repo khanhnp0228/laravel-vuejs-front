@@ -3,11 +3,11 @@
       <a-card title="Users" style="width: 100%">
         <div class="row mb-3">
           <div class="col-12 d-flex justify-content-end">
-            <a-button type="primary">
-              <router-link :to="{ name: 'admin-users-create' }">
+            <router-link :to="{ name: 'admin-users-create' }">
+              <a-button type="primary">
                 <font-awesome-icon :icon="['fas', 'plus']" />
-              </router-link>
-            </a-button>
+              </a-button>
+            </router-link>
           </div>
         </div>
 
@@ -26,11 +26,13 @@
                 </template>
 
                 <template v-if="column.key === 'action'">
-                  <a-button type="primary" class="me-1">
-                    <router-link :to="{ name: 'admin-users-edit', params: {id: record.id}}">
+
+                  <router-link :to="{ name: 'admin-users-edit', params: {id: record.id}}">
+                    <a-button type="primary" class="me-1">
                       <font-awesome-icon :icon="['fas', 'pen-to-square']" />
-                    </router-link>
-                  </a-button>
+                    </a-button>
+                  </router-link>
+
                   <a-button type="primary" danger>
                     <font-awesome-icon :icon="['fas', 'trash']" />
                   </a-button>
