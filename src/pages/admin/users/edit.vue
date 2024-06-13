@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="">
+  <form @submit.prevent="updateUser()">
     <a-card title="Edit User" style="width: 100%">
     <div class="row mb-3">
       <div class="col-12 col-sm-4">
@@ -164,13 +164,13 @@
           <div class="col-12 col-sm-3 text-start text-sm-end"></div>
 
           <div class="col-12 col-sm-5">
-            <a-checkbox v-model:checked="change_password">
+            <a-checkbox v-model:checked="user.change_password">
               Change password
             </a-checkbox>
           </div>
         </div>
 
-        <div class="row mb-3" v-if="change_password">
+        <div class="row mb-3" v-if="user.change_password">
           <div class="col-12 col-sm-3 text-start text-sm-end">
             <label>
               <span class="text-danger me-1">*</span>
@@ -195,7 +195,7 @@
           </div>
         </div>
 
-        <div class="row mb-3" v-if="change_password">
+        <div class="row mb-3" v-if="user.change_password">
           <div class="col-12 col-sm-3 text-start text-sm-end">
             <label>
               <span class="text-danger me-1">*</span>
@@ -269,6 +269,8 @@
   import { useMenu } from '../../../stores/use-menu';
   import axios from "axios";
   import {message} from "ant-design-vue";
+  import dayjs from "dayjs";
+
   const state = useMenu();
   state.onSelectedKeys(['admin-users']);
 
@@ -285,9 +287,9 @@
     department_id: [],
     status_id: [],
     login_at: "",
-    change_password_at: ""
+    change_password_at: "",
+    change_password: false
   });
-  const change_password = ref(false);
 
   const errors = ref({});
 
@@ -310,13 +312,26 @@
         // response.data.user.login_at ? user.login_at = response.data.user.login_at : user.login_at = "Not login yet";
         // response.data.user.change_password_at ? user.change_password_at = response.data.user.change_password_at : user.change_password_at = "Not change password yet";
 
-        user.login_at = response.data.user.login_at ?? "Not login yet";
-        user.change_password_at = response.data.user.change_password_at ?? "Not change password yet";
+        user.login_at = response.data.user.login_at ? dayjs(response.data.user.login_at).format('DD/MM/YYYY - HH:mm') : "Not login yet";
+        user.change_password_at = response.data.user.change_password_at ? dayjs(response.data.user.change_password_at).format('DD/MM/YYYY - HH:mm') : "Not change password yet";
       })
       .catch(function (errors) {
         console.log(errors);
       });
   }
+
+  const updateUser = () => {
+    axios.put(`http://localhost:8000/api/users/${route.params.id}`, user)
+      .then(function (response) {
+        if(response.status == 200){
+          message.success("Update info User success!.")
+          // router.push({ name: 'admin-users'});
+        }
+      })
+      .catch(function (error) {
+        errors.value = error.response.data.errors;
+      });
+  };
 
   getUserEdit();
 </script>

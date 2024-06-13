@@ -33,7 +33,7 @@
                     </a-button>
                   </router-link>
 
-                  <a-button type="primary" danger>
+                  <a-button type="primary" danger @click="deleteUser(record.id)">
                     <font-awesome-icon :icon="['fas', 'trash']" />
                   </a-button>
                 </template>
@@ -49,6 +49,12 @@
 <script setup>
   import { ref } from "vue";
   import { useMenu } from '../../../stores/use-menu';
+  import axios from "axios";
+  import { message } from "ant-design-vue";
+  import { Modal } from 'ant-design-vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  import { createVNode } from 'vue';
+
   const state = useMenu();
   state.onSelectedKeys(['admin-users']);
 
@@ -109,6 +115,31 @@
           console.log(error);
         });
   }
+
+  const deleteUser = (id) => {
+    Modal.confirm({
+      content: 'Confirm to delete ?',
+      icon: createVNode(ExclamationCircleOutlined),
+      onOk() {
+        axios.delete(`http://localhost:8000/api/users/${id}`)
+          .then(function (response) {
+            if(response.status == 200) {
+              message.success("Delete User success!");
+              getUsers();
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      cancelText: 'Cancel',
+      onCancel() {
+        Modal.destroyAll();
+      },
+    });
+
+
+  };
 
   // const getUsers2 = async () => {
   //   try {
